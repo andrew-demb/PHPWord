@@ -228,20 +228,18 @@ class ImageTest extends AbstractWebServerEmbedded
     }
 
     /**
-     * Test construct from a remote URL.
+     * Test construct from GD.
      */
-    public function testConstructFromRemoteUrl(): void
+    public function testConstructFromGd(): void
     {
         $source = self::getRemoteImageUrl();
-        $sourceContent = file_get_contents($source);
 
         $image = new Image($source);
-        self::assertEquals($sourceContent, $image->getSource());
-        self::assertEquals(md5((string) $sourceContent), $image->getMediaId());
-        self::assertEquals(Image::SOURCE_STRING, $image->getSourceType());
+        self::assertEquals($source, $image->getSource());
+        self::assertEquals(md5($source), $image->getMediaId());
         self::assertEquals('image/png', $image->getImageType());
         self::assertEquals('png', $image->getImageExtension());
-        self::assertEquals('imagecreatefromstring', $image->getImageCreateFunction());
+        self::assertEquals('imagecreatefrompng', $image->getImageCreateFunction());
         self::assertNotNull($image->getImageFunction());
         self::assertEquals(-1, $image->getImageQuality());
         self::assertTrue($image->isMemImage());
