@@ -501,13 +501,9 @@ class Image extends AbstractElement
             $this->sourceType = self::SOURCE_ARCHIVE;
         } elseif (filter_var($this->source, FILTER_VALIDATE_URL) !== false) {
             $this->memoryImage = true;
-            if (strpos($this->source, 'https') === 0) {
-                $fileContent = file_get_contents($this->source);
-                $this->source = $fileContent;
-                $this->sourceType = self::SOURCE_STRING;
-            } else {
-                $this->sourceType = self::SOURCE_GD;
-            }
+            $fileContent = file_get_contents($this->source);
+            $this->source = $fileContent;
+            $this->sourceType = self::SOURCE_STRING;
         } elseif ((strpos($this->source, chr(0)) === false) && @file_exists($this->source)) {
             $this->memoryImage = false;
             $this->sourceType = self::SOURCE_LOCAL;
